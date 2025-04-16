@@ -1,5 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MyProject</string>
-    <string name="products">Product</string>
-    <string name="add_product">Add Product</string>
+    <string name="app_name">Мой Склад</string>
+    
+    <!-- Главное меню -->
+    <string name="products">Товары</string>
+    <string name="documents">Документы</string>
+    <string name="reports">Отчеты</string>
+    <string name="expenses">Расходы</string>
+    <string name="scanner">Сканер</string>
+    
+    <!-- Товары -->
+    <string name="add_product">Добавить товар</string>
+    <string name="edit_product">Редактировать товар</string>
+    <string name="delete_product">Удалить товар</string>
+    <string name="product_name">Наименование товара</string>
+    <string name="product_code">Код товара</string>
+    <string name="product_barcode">Штрих-код</string>
+    <string name="product_price">Цена</string>
+    <string name="product_quantity">Количество</string>
+    <string name="product_description">Описание</string>
+    <string name="scan_barcode">Сканировать штрих-код</string>
+    <string name="add_photo">Добавить фото</string>
+    <string name="take_photo">Сделать фото</string>
+    <string name="group_image">Изображение группы</string>
+    
+    <!-- Документы -->
+    <string name="income">Приход</string>
+    <string name="outcome">Расход</string>
+    <string name="inventory">Инвентаризация</string>
+    <string name="add_document">Создать документ</string>
+    <string name="document_number">Номер документа</string>
+    <string name="document_date">Дата</string>
+    <string name="document_note">Примечание</string>
+    
+    <!-- Отчеты -->
+    <string name="sales_report">Отчет по продажам</string>
+    <string name="money_flow">Движение денег</string>
+    <string name="inventory_report">Отчет по остаткам</string>
+    <string name="generate_report">Сформировать отчет</string>
+    <string name="export_to_excel">Экспорт в Excel</string>
+    
+    <!-- Расходы -->
+    <string name="add_expense">Добавить затрату</string>
+    <string name="expense_list">Список затрат</string>
+    <string name="expense_categories">Категории затрат</string>
+    <string name="expense_amount">Сумма</string>
+    <string name="expense_category">Категория</string>
+    <string name="expense_date">Дата</string>
+    <string name="expense_note">Примечание</string>
+    
+    <!-- Сканер -->
+    <string name="scan_hint">Наведите камеру на штрих-код</string>
+    <string name="flash_on">Включить вспышку</string>
+    <string name="flash_off">Выключить вспышку</string>
+    
+    <!-- Общие -->
+    <string name="save">Сохранить</string>
+    <string name="cancel">Отмена</string>
+    <string name="delete">Удалить</string>
+    <string name="edit">Редактировать</string>
+    <string name="search">Поиск</string>
+    <string name="sort">Сортировка</string>
+    <string name="settings">Настройки</string>
+    <string name="more">Ещё</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="back">Назад</string>
+    
+    <!-- Диалоги -->
+    <string name="delete_confirmation">Вы уверены, что хотите удалить?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="error">Ошибка</string>
+    <string name="success">Успешно</string>
+    <string name="loading">Загрузка…</string>
+    
+    <!-- Сообщения -->
+    <string name="product_saved">Товар сохранен</string>
+    <string name="product_deleted">Товар удален</string>
+    <string name="document_saved">Документ сохранен</string>
+    <string name="expense_saved">Затрата сохранена</string>
+    <string name="report_generated">Отчет сформирован</string>
+    <string name="export_success">Экспорт выполнен успешно</string>
+    <string name="field_required">Поле обязательно для заполнения</string>
+    <string name="product_count">Количество: %d</string>
+    <string name="delete_product_confirmation">Вы уверены, что хотите удалить товар "%s"?</string>
+    <string name="error_empty_field">Поле не может быть пустым</string>
+    <string name="group_saved">Группа сохранена</string>
+    <string name="group_updated">Группа обновлена</string>
+    <string name="group_deleted">Группа удалена</string>
+    <string name="error_saving_group">Ошибка при сохранении группы</string>
+    <string name="error_updating_group">Ошибка при обновлении группы</string>
+    <string name="error_deleting_group">Ошибка при удалении группы</string>
+    <string name="confirm_delete_group">Вы уверены, что хотите удалить эту группу?</string>
+    <string name="name">Название</string>
+    <string name="barcode">Штрих-код</string>
+    <string name="show_in_all_warehouses">Показывать во всех складах</string>
+    <string name="select_color">Выберите цвет</string>
 </resources>

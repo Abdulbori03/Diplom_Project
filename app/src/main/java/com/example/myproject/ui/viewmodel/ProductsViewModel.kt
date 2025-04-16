@@ -12,19 +12,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductViewModel @Inject constructor(
+class ProductsViewModel @Inject constructor(
     private val productRepository: ProductRepository
 ) : ViewModel() {
     private val _products = MutableStateFlow<List<Product>>(emptyList())
     val products: StateFlow<List<Product>> = _products.asStateFlow()
 
-    private val _searchResults = MutableStateFlow<List<Product>>(emptyList())
-    val searchResults: StateFlow<List<Product>> = _searchResults.asStateFlow()
-
-    private val _saveResult = MutableStateFlow<Result<Unit>?>(null)
-    val saveResult: StateFlow<Result<Unit>?> = _saveResult.asStateFlow()
-
     init {
+        loadProducts()
+    }
+
+    private fun loadProducts() {
         viewModelScope.launch {
             productRepository.getAllProducts().collect { products ->
                 _products.value = products
@@ -34,23 +32,13 @@ class ProductViewModel @Inject constructor(
 
     fun addProduct(product: Product) {
         viewModelScope.launch {
-            try {
-                productRepository.insertProduct(product)
-                _saveResult.value = Result.success(Unit)
-            } catch (e: Exception) {
-                _saveResult.value = Result.failure(e)
-            }
+            productRepository.insertProduct(product)
         }
     }
 
     fun updateProduct(product: Product) {
         viewModelScope.launch {
-            try {
-                productRepository.updateProduct(product)
-                _saveResult.value = Result.success(Unit)
-            } catch (e: Exception) {
-                _saveResult.value = Result.failure(e)
-            }
+            productRepository.updateProduct(product)
         }
     }
 
@@ -63,10 +51,8 @@ class ProductViewModel @Inject constructor(
     fun searchProducts(query: String) {
         viewModelScope.launch {
             productRepository.searchProducts(query).collect { results ->
-                _searchResults.value = results
+                _products.value = results
             }
         }
     }
-
-    fun getProductById(id: Long) = productRepository.getProductById(id)
 } 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="folder_colors">
+        <item>@color/teal_700</item>
+        <item>@color/blue</item>
+        <item>@color/green</item>
+        <item>@color/yellow</item>
+        <item>@color/red</item>
+        <item>@color/purple</item>
+        <item>@color/orange</item>
+        <item>@color/brown</item>
+    </array>
+
+    <string-array name="units">
+        <item>шт</item>
+        <item>кг</item>
+        <item>л</item>
+        <item>м</item>
+        <item>уп</item>
+        <item>компл</item>
+    </string-array>
+</resources> 

@@ -39,8 +39,7 @@ class ProductsAdapter(private val onProductClick: (Product) -> Unit) :
         fun bind(product: Product) {
             binding.apply {
                 productNameTextView.text = product.name
-                barcodeTextView.text = product.barcode
-                quantityTextView.text = "Количество: ${product.quantity}"
+                barcodeTextView.text = product.barcode ?: "Нет штрихкода"
                 priceTextView.text = String.format("%.2f ₽", product.price)
             }
         }
