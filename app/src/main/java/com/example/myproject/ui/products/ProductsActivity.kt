@@ -1,5 +1,6 @@
 package com.example.myproject.ui.products
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import com.example.myproject.data.db.AppDatabase
 import com.example.myproject.data.model.Product
 import com.example.myproject.data.repository.ProductRepository
 import com.example.myproject.databinding.ActivityProductsBinding
+import com.example.myproject.ui.groups.GroupsActivity
 import com.example.myproject.ui.viewmodel.ProductViewModel
 import com.example.myproject.ui.viewmodel.ProductViewModelFactory
 import com.google.android.material.appbar.MaterialToolbar
@@ -57,8 +59,6 @@ class ProductsActivity : AppCompatActivity() {
             moreButton.setOnClickListener {
                 // TODO: Show more options
             }
-
-            warehouseText.text = "Основной склад"
         }
     }
 
@@ -74,16 +74,21 @@ class ProductsActivity : AppCompatActivity() {
             Toast.makeText(this, "Выбран товар: ${product.name}", Toast.LENGTH_SHORT).show()
             // TODO: Open product details
         }
-        binding.productsRecyclerView.apply {
+        binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@ProductsActivity)
             adapter = this@ProductsActivity.adapter
         }
     }
 
     private fun setupClickListeners() {
-        binding.addProductFab.setOnClickListener {
+        binding.addProductButton.setOnClickListener {
             Toast.makeText(this, "Добавление товара", Toast.LENGTH_SHORT).show()
             // TODO: Open add product dialog
+        }
+
+        binding.addGroupButton.setOnClickListener {
+            val intent = Intent(this, GroupsActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -99,6 +104,6 @@ class ProductsActivity : AppCompatActivity() {
     }
 
     private fun updateProductCount(products: List<Product>) {
-        binding.countText.text = "${products.size}"
+        binding.totalCountText.text = "${products.size}"
     }
 } 

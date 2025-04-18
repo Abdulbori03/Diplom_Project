@@ -5,21 +5,21 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myproject.data.db.AppDatabase
 import com.example.myproject.data.model.Group
+import com.example.myproject.data.repository.GroupRepository
 import com.example.myproject.databinding.ActivityGroupsBinding
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
 class GroupsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGroupsBinding
-    private val viewModel: GroupsViewModel by viewModels()
+    private lateinit var viewModel: GroupViewModel
     private lateinit var adapter: GroupsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,10 +27,18 @@ class GroupsActivity : AppCompatActivity() {
         binding = ActivityGroupsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initViewModel()
         setupToolbar()
         setupRecyclerView()
         setupClickListeners()
         observeViewModel()
+    }
+
+    private fun initViewModel() {
+        val groupDao = AppDatabase.getDatabase(this).groupDao()
+        val repository = GroupRepository(groupDao)
+        viewModel = ViewModelProvider(this, GroupViewModel.Factory(repository))
+            .get(GroupViewModel::class.java)
     }
 
     private fun setupToolbar() {
@@ -42,10 +50,10 @@ class GroupsActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         adapter = GroupsAdapter(
             onEditClick = { group ->
-                // TODO: Открыть экран редактирования группы
+                startEditGroupActivity(group)
             },
             onDeleteClick = { group ->
-                // TODO: Показать диалог подтверждения удаления
+                showDeleteConfirmationDialog(group)
             }
         )
 
@@ -62,8 +70,10 @@ class GroupsActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        viewModel.groups.observe(this) { groups ->
-            adapter.submitList(groups)
+        lifecycleScope.launch {
+            viewModel.groups.collect { groups ->
+                adapter.submitList(groups)
+            }
         }
     }
 

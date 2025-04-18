@@ -24,7 +24,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Закрыть"
             android:src="@drawable/ic_close"
-            android:tint="@color/white" />
+            app:tint="@color/white" />
 
         <View
             android:layout_width="0dp"
@@ -39,7 +39,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Вспышка"
             android:src="@drawable/ic_flash_off"
-            android:tint="@color/white" />
+            app:tint="@color/white" />
 
         <ImageButton
             android:id="@+id/settingsButton"
@@ -48,7 +48,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Настройки"
             android:src="@drawable/ic_settings"
-            android:tint="@color/white" />
+            app:tint="@color/white" />
 
     </LinearLayout>
 

@@ -32,6 +32,7 @@
         <activity android:name=".ui.expenses.ExpensesActivity" />
         <activity android:name=".ui.scanner.BarcodeScannerActivity" />
         <activity android:name=".ui.groups.AddGroupActivity" />
+        <activity android:name=".ui.groups.GroupsActivity" />
     </application>
 
 </manifest>

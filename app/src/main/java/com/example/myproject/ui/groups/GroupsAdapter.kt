@@ -9,7 +9,6 @@ import com.example.myproject.data.model.Group
 import com.example.myproject.databinding.ItemGroupBinding
 
 class GroupsAdapter(
-    private val onGroupClick: (Group) -> Unit = {},
     private val onEditClick: (Group) -> Unit,
     private val onDeleteClick: (Group) -> Unit
 ) : ListAdapter<Group, GroupsAdapter.GroupViewHolder>(GroupDiffCallback()) {
@@ -30,24 +29,17 @@ class GroupsAdapter(
     inner class GroupViewHolder(
         private val binding: ItemGroupBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        
-        init {
-            binding.root.setOnClickListener {
-                val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    onGroupClick(getItem(position))
-                }
-            }
 
+        init {
             binding.buttonEdit.setOnClickListener {
-                val position = adapterPosition
+                val position = absoluteAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     onEditClick(getItem(position))
                 }
             }
 
             binding.buttonDelete.setOnClickListener {
-                val position = adapterPosition
+                val position = absoluteAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     onDeleteClick(getItem(position))
                 }
@@ -55,9 +47,11 @@ class GroupsAdapter(
         }
 
         fun bind(group: Group) {
-            binding.textGroupName.text = group.name
-            binding.textGroupBarcode.text = group.barcode ?: "Нет штрихкода"
-            binding.groupImage.setBackgroundColor(group.color)
+            binding.apply {
+                textGroupName.text = group.name
+                textGroupBarcode.text = group.barcode
+                groupImage.setBackgroundColor(group.color)
+            }
         }
     }
 

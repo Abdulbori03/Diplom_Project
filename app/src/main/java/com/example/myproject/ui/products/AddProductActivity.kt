@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView
 import androidx.lifecycle.lifecycleScope
 import com.example.myproject.R
 import com.example.myproject.data.model.Product
@@ -70,18 +71,24 @@ class AddProductActivity : AppCompatActivity() {
                 openBarcodeScanner()
             }
 
-            toolbar.setOnMenuItemClickListener { menuItem ->
-                when (menuItem.itemId) {
-                    android.R.id.home -> {
-                        finish()
-                        true
-                    }
-                    R.id.action_save -> {
-                        saveProduct()
-                        true
-                    }
-                    else -> false
+            backButton.setOnClickListener {
+                finish()
+            }
+
+            saveButton.setOnClickListener {
+                saveProduct()
+            }
+
+            decreaseQuantityButton.setOnClickListener {
+                val currentQuantity = quantityInput.text.toString().toDoubleOrNull() ?: 0.0
+                if (currentQuantity > 0) {
+                    quantityInput.setText((currentQuantity - 1).toString())
                 }
+            }
+
+            increaseQuantityButton.setOnClickListener {
+                val currentQuantity = quantityInput.text.toString().toDoubleOrNull() ?: 0.0
+                quantityInput.setText((currentQuantity + 1).toString())
             }
         }
     }
@@ -90,13 +97,17 @@ class AddProductActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val groups = groupViewModel.allGroups.first()
             val groupNames = groups.map { it.name }
-            val groupsAdapter = ArrayAdapter(this@AddProductActivity, 
-                android.R.layout.simple_dropdown_item_1line, 
-                groupNames)
-            binding.groupInput.setAdapter(groupsAdapter)
-
-            binding.groupInput.setOnItemClickListener { _, _, position, _ ->
-                selectedGroupId = groups[position].id
+            val groupsAdapter = ArrayAdapter<String>(
+                this@AddProductActivity,
+                android.R.layout.simple_dropdown_item_1line,
+                groupNames
+            )
+            
+            (binding.groupInput as AppCompatAutoCompleteTextView).apply {
+                setAdapter(groupsAdapter)
+                setOnItemClickListener { _, _, position, _ ->
+                    selectedGroupId = groups[position].id
+                }
             }
         }
     }
@@ -109,16 +120,16 @@ class AddProductActivity : AppCompatActivity() {
     private fun saveProduct() {
         val name = binding.nameInput.text.toString().trim()
         if (name.isEmpty()) {
-            binding.nameLayout.error = "Введите наименование"
+            binding.nameInputLayout.error = "Введите наименование"
             return
         }
 
-        val price = binding.priceInput.text.toString().toDoubleOrNull() ?: 0.0
+        val quantity = binding.quantityInput.text.toString().toDoubleOrNull() ?: 0.0
 
         val product = Product(
             name = name,
             barcode = binding.barcodeInput.text?.toString(),
-            price = price,
+            price = quantity,
             category = "",
             groupId = selectedGroupId,
             createdAt = System.currentTimeMillis(),
@@ -155,8 +166,17 @@ class AddProductActivity : AppCompatActivity() {
                     product?.let {
                         binding.nameInput.setText(it.name)
                         binding.barcodeInput.setText(it.barcode)
-                        binding.priceInput.setText(it.price.toString())
+                        binding.quantityInput.setText(it.price.toString())
                         selectedGroupId = it.groupId
+                        
+                        // Установка выбранной группы
+                        if (it.groupId != null) {
+                            val groups = groupViewModel.allGroups.first()
+                            val group = groups.find { g -> g.id == it.groupId }
+                            group?.let { g ->
+                                (binding.groupInput as AppCompatAutoCompleteTextView).setText(g.name)
+                            }
+                        }
                     }
                 }
             }
